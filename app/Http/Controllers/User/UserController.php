@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $practice = all_document::distinct()->select('practice')->orderBy('id')->get();
+        $practice = all_document::distinct()->select('practice')->get();
         $count = all_document::count();
         return view('user.index',compact('practice','count'));
     }

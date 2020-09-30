@@ -7,6 +7,7 @@ use App\Models\all_document;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminDocumentController extends Controller
@@ -21,14 +22,17 @@ class AdminDocumentController extends Controller
             ->where('practice',$practice_name)
             ->where('type',$type)
             ->orderBy('dos','desc');
+
+
         return DataTables::of($data)
             ->addColumn('action',function ($data){
             })
             ->editColumn('action',function ($data){
-                $url = route('user.login');
-                $path = public_path().'/assets/admin/pdfiles/'.'/'.$data->document_name.'.pdf';
+
+                $path = public_path('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
+                $path_down = asset('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
                 if (file_exists($path)) {
-                    return '<a href="'.asset('/public/assets/admin/pdfiles/').'/'.$data->document_name.'.pdf'.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
+                    return '<a href="'.$path_down.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
                         <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
                 }else{
                     return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i>  |
@@ -38,7 +42,7 @@ class AdminDocumentController extends Controller
             ->editColumn('dos',function ($data){
                 return Carbon::parse($data->dos)->format('m/d/Y');
             })
-            ->make(true);
+            ->toJson();
     }
 
 
@@ -47,7 +51,6 @@ class AdminDocumentController extends Controller
     {
         $value = $request->search;
 
-        if ($value != "" && $value != null) {
             $data = DB::table('all_documents')
                 ->where('patient_name','LIKE',"%".$value."%")
                 ->orWhere('account_number','LIKE',"%".$value."%")
@@ -57,36 +60,16 @@ class AdminDocumentController extends Controller
                 ->orderBy('dos','desc');
 
             return DataTables::of($data)
+                ->addIndexColumn()
                 ->addColumn('action',function ($data){
                 })
                 ->editColumn('action',function ($data){
-                    $url = route('user.login');
-                    $path = public_path().'/assets/admin/pdfiles/'.'/'.$data->document_name.'.pdf';
-                    if (file_exists($path)) {
-                        return '<a href="'.asset('/public/assets/admin/pdfiles/').'/'.$data->document_name.'.pdf'.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
-                        <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
-                    }else{
-                        return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i>  |
-                        <i class="far fa-edit" style="font-size: 20px;padding-left: 5px;" id="'.$data->id .'" onclick="editdata(this.id)" data-toggle="modal" data-target="#exampleModalCenter"></i>';
-                    }
-                })
-                ->editColumn('dos',function ($data){
-                    return Carbon::parse($data->dos)->format('m/d/Y');
-                })
-                ->make(true);
-        }else{
-            $data = DB::table('all_documents')
-                ->orderBy('dos','desc')
-                ->where('status',"ami123");
 
-            return DataTables::of($data)
-                ->addColumn('action',function ($data){
-                })
-                ->editColumn('action',function ($data){
-                    $url = route('user.login');
-                    $path = public_path().'/assets/admin/pdfiles/'.'/'.$data->document_name.'.pdf';
+
+                    $path = public_path('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
+                    $path_down = asset('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
                     if (file_exists($path)) {
-                        return '<a href="'.asset('/public/assets/admin/pdfiles/').'/'.$data->document_name.'.pdf'.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
+                        return '<a href="'.$path_down.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
                         <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
                     }else{
                         return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i>  |
@@ -96,8 +79,8 @@ class AdminDocumentController extends Controller
                 ->editColumn('dos',function ($data){
                     return Carbon::parse($data->dos)->format('m/d/Y');
                 })
-                ->make(true);
-        }
+                ->toJson();
+
 
 
 

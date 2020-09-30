@@ -30,60 +30,142 @@
 
 
 
+
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: show;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+            background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 150ms infinite linear;
+            -moz-animation: spinner 150ms infinite linear;
+            -ms-animation: spinner 150ms infinite linear;
+            -o-animation: spinner 150ms infinite linear;
+            animation: spinner 150ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+
     </style>
 @endsection
 @section('user')
-    <div class="row" style="margin-top: -90px;">
+    {{--    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#importDocument" style="margin-top: -32px;">Import Excel</button>--}}
+
+    <br>
+    <div class="row" style="margin-top: -100px;">
         <div class="col-lg-12">
-            <div class="card">
-
+            <div class="card" style="margin-top: -32px">
+                {{$count}}
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3" style="padding-top: 5px;">
-                            <select class="form-control practicename" name="practice_id" style="margin-top: -5px;border: 2px solid goldenrod">
-                                <option value="0">----SELECT PRACTICE----</option>
-                                @foreach($practice as $prac)
-                                    <option value="{{$prac->practice}}">{{$prac->practice}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3" style="padding-top: 5px;">
-                            <select class="form-control type" name="type" style="margin-top: -5px;border: 2px solid goldenrod">
-                                <option value="0">----SELECT TYPE----</option>
-                                <option value="Demo">DEMO</option>
-                                <option value="Super Bill">SUPER BILL</option>
-                                <option value="Insurance Payment">INS.PAY</option>
-                                <option value="Denial">DENIAL</option>
-                                <option value="Medical Record">M.R</option>
-                                <option value="Patient Payment">PPAY</option>
-                                <option value="Refund">REFUND</option>
-                                <option value="Authorization">AUTH</option>
-                                <option value="Error">ERROR</option>
-                                <option value="Referal">REFERAL</option>
-                            </select>
-
-                        </div>
-
-                        <div class="col-md-2">
-                            <input type="date" name="form_date" id="from_date" class="form-control from_date" placeholder="From Date" style="margin-top: -5px;border: 2px solid goldenrod">
-
-                        </div>
-                        <div class="col-md-2">
-                            <input type="date" name="to_date" id="to_date" class="form-control to_date" placeholder="From Date" style="margin-top: -5px;border: 2px solid goldenrod">
-
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-success btn-block" style="background-color: #4267b2;margin-top: -5px" id="filter">Filter</button>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-
-                        <div class="row">
-
-                        </div>
-                    </div>
-                    <br>
-
                     <table class="table table-striped table-bordered mb-0" id="demo">
 
                         <thead>
@@ -97,6 +179,7 @@
                         </tr>
                         </thead>
                     </table>
+
                 </div>
 
             </div>
@@ -104,8 +187,7 @@
     </div>
 
 
-
-    <div class="modal fade" id="userupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,7 +223,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary" id="">Update</button>
                     </div>
                 </form>
             </div>
@@ -160,23 +242,13 @@
     <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
 
 
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/autofill/2.3.5/js/dataTables.autoFill.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
-
-
     <script>
-
 
 
         function editdata(id)
         {
             var id = id;
+            console.log(id);
             $.ajax({
                 type : "POST",
                 url : "{{route('user.get.singe.data')}}",
@@ -203,71 +275,60 @@
             });
         };
 
+
+
+        // $('#updatebtn').click(function (e) {
+        //     e.preventDefault();
+        //
+        //     var p_name = $('.practicename').val();
+        //     var acnum = $('.acnum').val();
+        //     var dosdate = $('.dosdate').val();
+        //     var dcoumentname = $('.dcoumentname').val();
+        //     var status = $('.status').val();
+        //
+        //
+        //     console.log(p_name);
+        //     console.log(acnum);
+        //     console.log(dosdate);
+        //     console.log(dcoumentname);
+        //     console.log(status);
+        //
+        // })
+
+
+
         $(document).ready(function (){
 
 
-            $.ajax({
-                type : "POST",
-                url: "{{route('update.data.date')}}",
-                data : {
-                    '_token' : "{{csrf_token()}}",
-
-                },
-                success:function(data){
-                    console.log('success');
-                }
-            });
+            $('.type').change(function () {
 
 
-
-
-
-
-
-
-            $('#filter').click(function () {
-
-
-                var type_name = $('.type').val();
+                var type_name = $(this).val();
                 var practice_name = $('.practicename').val();
-                var from_date = $('.from_date').val();
-                var to_date = $('.to_date').val();
-                //
-                var a = new Date(from_date);
-                var month = a.getMonth();
-                var b = new Date(to_date);
-                var month1 = b.getMonth();
 
-                var tmont = (month1 -  month);
-
-                if (type_name == "0"  ){
-                    alert('Please Select All Field');
-                }else if (practice_name == 0){
-                    alert('Please Select All Field');
-                }else if (from_date == ''){
-                    alert('Please Select All Field');
-                }else if (to_date == 0){
-                    alert('Please Select All Field');
-                }else if (tmont  > 1) {
-                    alert('Data Can show only one moth');
-
-
+                if (practice_name == "0"  ){
+                    alert('Please Select Practice');
+                    $('.type').val(0);
+                }else if (type_name == 0){
+                    alert('Please Select Type');
+                    $('.type').val(0);
                 }else {
                     $('.msg').hide();
-
+                    $('#demo').hide();
                     $('#demo').DataTable().destroy();
                     $('#demo').DataTable({
                         "processing": true,
                         "serverSide": true,
                         "pageLength": 30,
+                        "bFilter": false,
+                        "language": {
+                            processing: '  <div class="loading">Loading&#8230;</div> '},
                         "ajax": {
                             "type": "POST",
                             data:{
                                 '_token' : "{{csrf_token()}}",
                                 type_name: type_name,
                                 practice_name : practice_name,
-                                from_date : from_date,
-                                to_date : to_date
                             },
                             "url": "{{route('user.get.practice.filter')}}"
                         },
@@ -280,15 +341,8 @@
                             {data: 'action', name: 'action', orderable: false, searchable: false},
                         ],
                     });
+                    $('#demo').show();
                 }
-
-
-
-
-
-
-
-
 
             });
 
@@ -300,5 +354,6 @@
 
         });
     </script>
+
 
 @endsection

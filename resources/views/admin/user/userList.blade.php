@@ -3,7 +3,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/autofill/2.3.5/css/autoFill.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">    <style>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
+
+
+    <style>
         .table.dataTable tbody th, table.dataTable tbody td{
             white-space: nowrap; overflow: hidden; text-overflow:ellipsis;
         }
@@ -76,6 +79,9 @@
                         <label>Password</label>
                         <input type="password" class="form-control" name="password">
                     </div>
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,6 +116,16 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" class="form-control" name="password">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Practice</label>
+                            <p>asdasda</p> <i class="fas fa-trash"></i>
+                            <select class="form-control" multiple>
+                                <option>dasdasd</option>
+                                <option>asdasdas</option>
+                                <option>asdasd</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

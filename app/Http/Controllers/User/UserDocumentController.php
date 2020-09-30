@@ -7,6 +7,7 @@ use App\Models\all_document;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserDocumentController extends Controller
@@ -14,13 +15,36 @@ class UserDocumentController extends Controller
     public function demo()
     {
 
-        $data = DB::table('all_documents')->orderBy('id');
+        $type = $request->type_name;
+        $practice_name = $request->practice_name;
+
+        $data = DB::table('all_documents')
+            ->where('practice',$practice_name)
+            ->where('type',$type)
+            ->orderBy('dos','desc');
+
+
         return DataTables::of($data)
+            ->addIndexColumn()
             ->addColumn('action',function ($data){
-                return ' <button id="'.$data->id .'" onclick="useredit(this.id)" class="btn btn-success btn-sm" data-toggle="modal" data-target="#adminuseredit"><i class="fas fa-file-pdf"></i> </button> |
-                        <button id="'.$data->id .'" onclick="userdelete(this.id)" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#adminuserdelete"><i class="far fa-edit"></i> </button>';
             })
-            ->make(true);
+            ->editColumn('action',function ($data){
+
+
+                $path = public_path('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
+
+                if (file_exists($path)) {
+                    return '<a href="'.$path.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
+                        <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
+                }else{
+                    return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i> |
+                        <i class="far fa-edit" style="font-size: 20px;padding-left: 5px;" id="'.$data->id .'" onclick="editdata(this.id)" data-toggle="modal" data-target="#exampleModalCenter"></i>';
+                }
+            })
+            ->editColumn('dos',function ($data){
+                return Carbon::parse($data->dos)->format('m/d/Y');
+            })
+            ->toJson();
     }
 
 
@@ -28,34 +52,77 @@ class UserDocumentController extends Controller
     {
         $type = $request->type_name;
         $practice_name = $request->practice_name;
-        $from = Carbon::parse($request->from_date)->format('Y-m-d');
-        $to = Carbon::parse($request->to_date)->format('Y-m-d');
-
 
         $data = DB::table('all_documents')
             ->where('practice',$practice_name)
             ->where('type',$type)
-            ->where('dos','>=',$from)
-            ->where('dos','<=',$to)
             ->orderBy('dos','desc');
+
+
         return DataTables::of($data)
+            ->addIndexColumn()
             ->addColumn('action',function ($data){
             })
             ->editColumn('action',function ($data){
-                $path = public_path().'/assets/admin/pdfiles/'.'/'.$data->document_name.'.pdf';
+
+
+                $path = public_path('/assets/admin/pdffiles').'/'.$data->document_name.'.pdf';
+
                 if (file_exists($path)) {
-                    return '<a href="'.asset('/public/assets/admin/pdfiles/').'/'.$data->document_name.'.pdf'.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
-                        <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#userupdate"></i>';
+                    return '<a href="'.$path.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
+                        <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
                 }else{
-                    return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i>  |
-                        <i class="far fa-edit" style="font-size: 20px;padding-left: 5px;" id="'.$data->id .'" onclick="editdata(this.id)" data-toggle="modal" data-target="#userupdate"></i>';
+                    return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i> |
+                        <i class="far fa-edit" style="font-size: 20px;padding-left: 5px;" id="'.$data->id .'" onclick="editdata(this.id)" data-toggle="modal" data-target="#exampleModalCenter"></i>';
                 }
             })
-            ->make(true);
+            ->editColumn('dos',function ($data){
+                return Carbon::parse($data->dos)->format('m/d/Y');
+            })
+            ->toJson();
 
 
 
     }
+
+
+    public function get_practice_by_search(Request $request)
+    {
+        $value = $request->search;
+
+        $data = DB::table('all_documents')
+            ->where('patient_name','LIKE',"%".$value."%")
+            ->orWhere('account_number','LIKE',"%".$value."%")
+            ->orWhere('document_name','LIKE',"%".$value."%")
+            ->orWhere('status','LIKE',"%".$value."%")
+            ->orWhere('type','LIKE',"%".$value."%")
+            ->orderBy('dos','desc');
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action',function ($data){
+            })
+            ->editColumn('action',function ($data){
+
+
+                $path = public_path('/assets/admin/pdffiles/').'/'.$data->document_name.'.pdf';
+
+                if (file_exists($path)) {
+                    return '<a href="'.$path.'"  target="_blank">  <i class="far fa-file-pdf" style="font-size: 20px;padding-right: 5px;"></i></a>  |
+                        <i class="far fa-edit" id="'.$data->id .'" onclick="editdata(this.id)" style="font-size: 20px;padding-left: 5px;" data-toggle="modal" data-target="#exampleModalCenter"></i>';
+                }else{
+                    return '<i class="far fa-file" style="font-size: 20px;padding-right: 5px;"></i> |
+                        <i class="far fa-edit" style="font-size: 20px;padding-left: 5px;" id="'.$data->id .'" onclick="editdata(this.id)" data-toggle="modal" data-target="#exampleModalCenter"></i>';
+                }
+            })
+            ->editColumn('dos',function ($data){
+                return Carbon::parse($data->dos)->format('m/d/Y');
+            })
+            ->toJson();
+
+
+    }
+
 
 
     public function get_single_data(Request $request)

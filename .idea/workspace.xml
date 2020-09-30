@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6d14f013-7453-4d12-a86d-da4907d74cc7" name="Default Changelist" comment="" />
+    <list default="true" id="6d14f013-7453-4d12-a86d-da4907d74cc7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/curistracker_backup_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/curistracker_backup_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminDocumentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminDocumentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/AdminUserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/UserDocumentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/UserDocumentController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/user/userList.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/user/userList.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/user.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/user/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/user/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +36,9 @@
         <option value="composer.json" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -143,6 +165,9 @@
       <path value="$PROJECT_DIR$/vendor/intervention/image" />
       <path value="$PROJECT_DIR$/vendor/box/spout" />
       <path value="$PROJECT_DIR$/vendor/rap2hpoutre/fast-excel" />
+      <path value="$PROJECT_DIR$/vendor/mtdowling/jmespath.php" />
+      <path value="$PROJECT_DIR$/vendor/aws/aws-sdk-php" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem-aws-s3-v3" />
     </include_path>
   </component>
   <component name="ProjectId" id="1i57QrOmjookOlHXnOGaG8aD1nl" />
@@ -174,7 +199,14 @@
       <workItem from="1601185586155" duration="36847000" />
       <workItem from="1601280495325" duration="83000" />
       <workItem from="1601281292504" duration="359000" />
-      <workItem from="1601284611361" duration="29758000" />
+      <workItem from="1601284611361" duration="30569000" />
+      <workItem from="1601331016743" duration="2604000" />
+      <workItem from="1601365894897" duration="1756000" />
+      <workItem from="1601368409372" duration="1485000" />
+      <workItem from="1601391445378" duration="25716000" />
+      <workItem from="1601455983666" duration="6481000" />
+      <workItem from="1601471556865" duration="5529000" />
+      <workItem from="1601477503581" duration="364000" />
     </task>
     <servers />
   </component>
@@ -182,27 +214,27 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="2613" y="298" width="524" height="481" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601291114720">
+    <state x="2613" y="298" width="524" height="481" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601421008131">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2613" y="298" width="524" height="481" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601291114720" />
-    <state x="743" y="287" width="424" height="481" key="FileChooserDialogImpl" timestamp="1601302723451">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2613" y="298" width="524" height="481" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601421008131" />
+    <state x="2663" y="298" width="424" height="481" key="FileChooserDialogImpl" timestamp="1601466133878">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="743" y="287" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1601302723451" />
-    <state x="2663" y="298" width="424" height="481" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601281650423" />
-    <state x="2698" y="466" width="354" height="147" key="NewPhpFileDialog" timestamp="1601221768524">
+    <state x="2663" y="298" width="424" height="481" key="FileChooserDialogImpl/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601466133878" />
+    <state x="2698" y="466" width="354" height="147" key="NewPhpFileDialog" timestamp="1601414586481">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2698" y="466" width="354" height="147" key="NewPhpFileDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601221768524" />
+    <state x="2698" y="466" width="354" height="147" key="NewPhpFileDialog/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601414586481" />
     <state x="2544" y="248" key="run.anything.popup" timestamp="1601290803117">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2544" y="248" key="run.anything.popup/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601290803117" />
-    <state x="623" y="230" width="672" height="653" key="search.everywhere.popup" timestamp="1601307182523">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2543" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1601418550572">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="623" y="230" width="672" height="653" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1080@0.0.1920.1040" timestamp="1601307182523" />
-    <state x="2543" y="239" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601295919310" />
+    <state x="2543" y="239" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601418550572" />
   </component>
 </project>

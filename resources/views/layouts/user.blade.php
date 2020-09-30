@@ -28,6 +28,14 @@
     <link href="{{asset('assets/admin/')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{asset('assets/admin/')}}/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+    <style>
+        select>option{
+            height:50px;
+        }
+    </style>
+
     @yield('css')
 </head>
 
@@ -36,8 +44,8 @@
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-    <header id="page-topbar" style="margin-top: -10px;background-color: #4267b2">
-        <div class="navbar-header">
+    <header id="page-topbar" style="margin-top: -10px;background-color: #4267b2;max-width: 100%" class="text-left">
+        <div class="navbar-header" style="max-width: 100%">
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box">
@@ -55,20 +63,67 @@
                                    asdasd
                                 </span>
                         <span class="logo-lg">
-                            <h4 style="color: white;margin-top: 15px;">NATIONWIDE</h4>
+                            <h4 style="color: white;margin-top: 23px;">NATIONWIDE</h4>
                                 </span>
                     </a>
                 </div>
+
+
 
                 <button type="button" class="btn btn-sm px-3 font-size-24 d-lg-none header-item" data-toggle="collapse" data-target="#topnav-menu-content">
                     <i class="ri-menu-2-line align-middle"></i>
                 </button>
 
                 <!-- App Search-->
-
+                <br>
 
                 <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
-
+                    <form class="app-search d-none d-lg-block">
+                        <div class="position-relative">
+                            <?php
+                            $user_prac = \App\Models\user_practice::where('user_id',Auth::user()->id)->get();
+                            $npls = array();
+                            foreach ($user_prac as $uprac){
+                                $get_n = \App\Models\user_practice::where('id',$uprac->id)->first();
+                                array_push($npls,$get_n->practice_name);
+                            }
+                            $practice =\App\Models\all_document::distinct()->select('practice')->whereIn('practice',$npls)->get()
+                            ?>
+                            <select class="form-control practicename" name="practice_id" style="background-color: #8da2ca;color: black;border: 2px solid #daa520">
+                                <option value="0">----SELECT PRACTICE----</option>
+                                @foreach($practice as $prac)
+                                    <option value="{{$prac->practice}}">{{$prac->practice}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
+                    <form class="app-search d-none d-lg-block">
+                        <div class="position-relative">
+                            <select class="form-control type" name="type" style="background-color: #8da2ca;color: black;border: 2px solid #daa520">
+                                <option value="0">----SELECT TYPE----</option>
+                                <option value="Demo">DEMO</option>
+                                <option value="Super Bill">SUPER BILL</option>
+                                <option value="Insurance Payment">INS.PAY</option>
+                                <option value="Denial">DENIAL</option>
+                                <option value="Medical Record">M.R</option>
+                                <option value="Patient Payment">PPAY</option>
+                                <option value="Refund">REFUND</option>
+                                <option value="Authorization">AUTH</option>
+                                <option value="Error">ERROR</option>
+                                <option value="Referal">REFERAL</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
+                    <div class="app-search d-none d-lg-block">
+                        <div class="position-relative">
+                            <input type="text" class="form-control searchvalue" placeholder="Search...">
+                            <span class="ri-search-line"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -82,18 +137,18 @@
 
                 </div>
 
-                <div class="dropdown d-inline-block user-dropdown" style="margin-top: 8px;">
+
+
+
+                <div class="dropdown d-inline-block user-dropdown">
                     <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-
-
                         <span class="d-none d-xl-inline-block ml-1">{{Auth::user()->name}}</span>
                         <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <!-- item-->
-                        <a class="dropdown-item" href="{{route('user.change.password')}}"><i class="ri-lock-unlock-line align-middle mr-1"></i> Change Password</a>
+
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
@@ -110,9 +165,7 @@
         </div>
     </header>
 
-    <div class="topnav">
 
-    </div>
 
     <!-- ============================================================== -->
     <!-- Start right Content here -->
@@ -168,7 +221,65 @@
 
 <script src="{{asset('assets/admin/')}}/js/app.js"></script>
 
+
+
+<script>
+    $(document).ready(function () {
+        $('.searchvalue').keyup(function (e) {
+
+            if(e.keyCode == 13){
+                e.preventDefault();
+
+                //entered is clicked
+                // alert('Entered button clicked inside input');
+
+                var search = $('.searchvalue').val();
+                $('#demo').hide();
+                $('#demo').DataTable().destroy();
+                $('#demo').DataTable({
+                    responsive: true,
+                    "deferRender": true,
+                    "processing": true,
+                    "serverSide": true,
+                    "pageLength": 30,
+                    "bFilter": false,
+                    "language": {
+                        processing: '  <div class="loading">Loading&#8230;</div> '},
+                    "ajax": {
+                        "type": "POST",
+                        data:{
+                            '_token' : "{{csrf_token()}}",
+                            search: search
+                        },
+                        "url": "{{route('user.get.data.by.search')}}"
+                    },
+                    columns: [
+                        { data: 'patient_name', name: 'patient_name',class : 'text-left' },
+                        { data: 'account_number', name: 'account_number',class : 'text-left' },
+                        { data: 'dos', name: 'dos',class : 'text-left' },
+                        { data: 'document_name', name: 'document_name',class : 'text-left' },
+                        { data: 'status', name: 'status',class : 'text-left' },
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                });
+                $('#demo').show();
+            }
+
+
+
+        });
+    })
+</script>
+
+
+
+
 @yield('js')
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@include('layouts.message')
 
 </body>
 

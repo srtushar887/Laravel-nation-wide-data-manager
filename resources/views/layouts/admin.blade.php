@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- App favicon -->
     <link rel="shortcut icon" href="">
 
@@ -81,7 +83,7 @@
                     <form class="app-search d-none d-lg-block">
                         <div class="position-relative">
                             <?php
-                            $practice = \App\Models\all_document::distinct()->select('practice')->orderBy('id')->get();
+                            $practice = \App\Models\all_document::distinct()->select('practice')->get();
                             ?>
                                 <select class="form-control practicename" name="practice_id" style="background-color: #8da2ca;color: black;border: 2px solid #daa520">
                                     <option value="0">----SELECT PRACTICE----</option>
@@ -112,13 +114,14 @@
                     </form>
                 </div>
                 <div class="dropdown dropdown-mega d-none d-lg-block ml-2">
-                    <form class="app-search d-none d-lg-block">
+                    <div class="app-search d-none d-lg-block">
                         <div class="position-relative">
-                            <input type="text" class="form-control searchvalue" placeholder="Search..." style="background-color: #8da2ca;color: black;border: 2px solid #daa520">
+                            <input type="text" class="form-control searchvalue" placeholder="Search...">
                             <span class="ri-search-line"></span>
                         </div>
-                    </form>
+                    </div>
                 </div>
+
             </div>
 
             <div class="d-flex">
@@ -138,6 +141,15 @@
                         <span class="d-none d-xl-inline-block ml-1">Dashboards</span>
 
                     </button>
+                    </a>
+
+                </div>
+                <div class="dropdown d-inline-block user-dropdown">
+                    <a href="{{route('admin.upload.file')}}">
+                        <button type="button" class="btn header-item waves-effect"  aria-expanded="false">
+                            <span class="d-none d-xl-inline-block ml-1">Upload File</span>
+
+                        </button>
                     </a>
 
                 </div>
@@ -234,34 +246,49 @@
 <script>
     $(document).ready(function () {
         $('.searchvalue').keyup(function (e) {
-            e.preventDefault();
-            var search = $(this).val();
 
-            $('#demo').DataTable().destroy();
-            $('#demo').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "pageLength": 30,
-                "bFilter": false,
-                "ajax": {
-                    "type": "POST",
-                    data:{
-                        '_token' : "{{csrf_token()}}",
-                        search: search
+            if(e.keyCode == 13){
+                e.preventDefault();
+
+                //entered is clicked
+                // alert('Entered button clicked inside input');
+
+                var search = $('.searchvalue').val();
+                $('#demo').hide();
+                $('#demo').DataTable().destroy();
+                $('#demo').DataTable({
+                     responsive: true,
+                    "deferRender": true,
+                    "processing": true,
+                    "serverSide": true,
+                    "pageLength": 30,
+                    "bFilter": false,
+                    "language": {
+                        processing: '  <div class="loading">Loading&#8230;</div> '},
+
+                    "ajax": {
+                        "type": "POST",
+                        data:{
+                            '_token' : "{{csrf_token()}}",
+                            search: search
+                        },
+                        "url": "{{route('admin.get.data.by.search')}}"
                     },
-                    "url": "{{route('admin.get.data.by.search')}}"
-                },
-                columns: [
-                    { data: 'patient_name', name: 'patient_name',class : 'text-left' },
-                    { data: 'account_number', name: 'account_number',class : 'text-left' },
-                    { data: 'dos', name: 'dos',class : 'text-left' },
-                    { data: 'document_name', name: 'document_name',class : 'text-left' },
-                    { data: 'status', name: 'status',class : 'text-left' },
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
-                ],
-            });
+                    columns: [
+                        { data: 'patient_name', name: 'patient_name',class : 'text-left' },
+                        { data: 'account_number', name: 'account_number',class : 'text-left' },
+                        { data: 'dos', name: 'dos',class : 'text-left' },
+                        { data: 'document_name', name: 'document_name',class : 'text-left' },
+                        { data: 'status', name: 'status',class : 'text-left' },
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ],
+                });
+                $('#demo').show();
+            }
 
-        })
+
+
+        });
     })
 </script>
 
